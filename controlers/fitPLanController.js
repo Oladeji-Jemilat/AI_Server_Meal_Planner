@@ -1,5 +1,5 @@
 const { generateObject, generateText } = require("ai")
-const { googleAi } = require("../Config/gemini")
+const { googleAi } = require("../config/gemini")
 const { aiPlanSchema } = require("../schemas/fitnessPlanSchema")
 const { fitnessPlanAiPrompt } = require("../utils/aiprompts")
 const FitnessPlanModel = require ("../models/fitnessPlanModel")
