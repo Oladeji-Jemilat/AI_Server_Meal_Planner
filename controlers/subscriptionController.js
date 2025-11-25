@@ -55,7 +55,6 @@ const activateSubscription = async (req, res) => {
         if (body.event == "charge.success") {
             const { userId, plan } = body.data.metadata
             const reference = body.data.reference
-
             const startDate = new Date()
             const endDate = getEndDate(plan)
 

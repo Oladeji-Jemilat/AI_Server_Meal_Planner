@@ -13,17 +13,18 @@ const app = express()
 const authRoutes =require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoute")
 
-app.post(
-    "/api/subscription/webhook",
-    express.raw({ type: "*/*" }),   // keep body as buffer
-    activateSubscription
-);
 
 const PORT = process.env.PORT
 connectToDb()
 app.listen(PORT, ()=>{
 console.log(`server is running on port ${PORT}`);
 })
+
+app.post(
+    "/api/subscription/webhook",
+    express.raw({ type: "*/*" }),   // keep body as buffer
+    activateSubscription
+);
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -35,5 +36,9 @@ app.use("/api/auth", authRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/fit-plan", require("./routes/fitPlanRoute"))
 app.use("/api/subcription", require("./routes/subscriptionRoute"))
+
+
+
+
 
 //https://github.com/Oladeji-Jemilat/AI_Server_Meal_Planner.git
