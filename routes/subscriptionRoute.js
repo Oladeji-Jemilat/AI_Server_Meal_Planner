@@ -4,6 +4,6 @@ const { initializeSubscription, activateSubscription } = require("../controlers/
 const subscritionRouter = express.Router()
 
 subscritionRouter.post("/initialize", isLoggedIn, initializeSubscription)
-// subscritionRouter.post("/webhook", express.raw({type: "*/*"}), activateSubscription )
+//subscritionRouter.post("/webhook", express.raw({type: "*/*"}), activateSubscription )
 
 module.exports = subscritionRouter

@@ -33,7 +33,7 @@ app.use(morgan("dev"))
 
 app.use("/api/auth", authRoutes)
 app.use("/api/user", userRoutes)
-app.use("/api/fit-plan", require("./Routes/fitPlanRoute"))
+app.use("/api/fit-plan", require("./routes/fitPlanRoute"))
 app.use("/api/subcription", require("./routes/subscriptionRoute"))
 
 //https://github.com/Oladeji-Jemilat/AI_Server_Meal_Planner.git
