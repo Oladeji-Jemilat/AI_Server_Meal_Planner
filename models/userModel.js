@@ -1,6 +1,4 @@
 const mongoose = require("mongoose")
-
-
 const userSchema = new mongoose.Schema({
     
     name:{
@@ -19,38 +17,61 @@ const userSchema = new mongoose.Schema({
     },
     age:{
         type:Number,
-        require:false
+        trim:true
     },
     gender:{
         type:String,
+        trim:true,
         enum:["male", "female"]
     },
     height:{
-        type:Number,
-        require:false
+        type:String,
+        trim:true
     },
     weight:{
-        type:Number,
-        require:false
+        type:String,
+        trim:true
     },
     goal:{
         type:String,
-        enum:["weight_gain", "weight_loss"],
-        require:false
+        enum:["lose weight", "maintain weight", "gain weight"],
+        
     },
     activityLevel:{
         type:String,
+        trim:true,
         enum:["moderate", "active", "very_active"],
         default:"moderate"
     },
-    dietPref:{
+    dietPreference:{
         type:String,
-        enum:["none", "vegetarian", "vegan"],
+        trim:true,
+        enum:[
+            "none",
+            "balanced",
+            "high_protein",
+            "vegetarian",
+            "vegan",
+            "gluten_free",
+        ],
         default:"none"
+    },
+    timePerDay:{
+        type:String,
+        trim:true,
+        min:10
     },
     planAccess:{
         type:String,
-        enum:["free", "premium", "pro"]
+        trim:true,
+        enum:["free", "premium", "pro"],
+        default:"free"
+    },
+    
+     isVerified: {
+        type: Boolean,
+        default: false
+
     },
     verificationToken:{
         type:String,
@@ -59,6 +80,23 @@ const userSchema = new mongoose.Schema({
     verificationExp:{
         type:Date,
         default:null
+    },
+    subscription:{
+        status:{
+            type:String,
+            enum:["inactive", "active", "yearly"],
+            default:"inactive"
+        },
+        plan:{
+             type:String,
+            enum:["weekly", "monthly", "yearly"]
+
+        },
+        startDate:Date,
+         endDate:Date,
+         paymentRefrence:String   
+
+        
     }
 
 
