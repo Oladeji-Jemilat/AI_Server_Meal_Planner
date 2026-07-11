@@ -84,7 +84,7 @@ const userSchema = new mongoose.Schema({
     subscription:{
         status:{
             type:String,
-            enum:["inactive", "active", "yearly"],
+            enum:["inactive", "active"],
             default:"inactive"
         },
         plan:{

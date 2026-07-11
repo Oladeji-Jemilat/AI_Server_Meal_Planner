@@ -4,45 +4,97 @@ const { aiPlanSchema } = require("../schemas/fitnessPlanSchema")
 const { fitnessPlanAiPrompt } = require("../utils/aiprompts")
 const FitnessPlanModel = require ("../models/fitnessPlanModel")
 
+// const createFitnessPlan = async (req, res) => {
+//     try {
+//         const user = req.user
+
+//         //valiadate profile field
+//         const { age, gender, height, weight, goal, dietPreference, timePerDay } = user
+//         const requiredFields = { age, gender, height, weight, goal, timePerDay, dietPreference };
+//         for (const key in requiredFields) {
+//             if (!requiredFields[key]) {
+//                 return res.status(400).json({
+//                     message: `${key} is required. Please update your profile.`,
+//                 });
+//             }
+//         }
+//         const response = await generateObject({
+//             model: googleAi("gemini-2.5-flash"),
+//             prompt: fitnessPlanAiPrompt(user),
+//             schema: aiPlanSchema
+//         })
+
+//            const plan = response.object;
+
+//            //save plan to database
+//             const savedPlan = await FitnessPlanModel.create({
+//             userId: user._id,
+//             ...plan
+//         });
+//             res.status(200).json({
+//             success: true,
+//             message: "Fitness plan generated successfully",
+//             plan: savedPlan
+//         });  
+  
+//     } catch (error) {
+//         console.log(error)
+//         res.status(500).json({ message: error.message || "Internal Server Error" });
+//     }
+// }
+
 const createFitnessPlan = async (req, res) => {
     try {
-        const user = req.user
+        const user = req.user;
 
-        //valiadate profile field
-        const { age, gender, height, weight, goal, dietPreference, timePerDay } = user
+        const { age, gender, height, weight, goal, dietPreference, timePerDay } = user;
+
         const requiredFields = { age, gender, height, weight, goal, timePerDay, dietPreference };
+
         for (const key in requiredFields) {
             if (!requiredFields[key]) {
                 return res.status(400).json({
+                    success: false,
                     message: `${key} is required. Please update your profile.`,
                 });
             }
         }
+
         const response = await generateObject({
             model: googleAi("gemini-2.5-flash"),
             prompt: fitnessPlanAiPrompt(user),
             schema: aiPlanSchema
-        })
+        });
 
-           const plan = response.object;
+        if (!response || !response.object) {
+            return res.status(500).json({
+                success: false,
+                message: "AI failed to generate plan"
+            });
+        }
 
-           //save plan to database
-            const savedPlan = await FitnessPlanModel.create({
+        const plan = response.object;
+
+        const savedPlan = await FitnessPlanModel.create({
             userId: user._id,
             ...plan
         });
-            res.status(200).json({
+
+        return res.status(200).json({
             success: true,
             message: "Fitness plan generated successfully",
             plan: savedPlan
-        });  
-  
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: error.message || "Internal Server Error" });
-    }
-}
+        });
 
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: error.message || "Internal Server Error"
+        });
+    }
+};
 
 const getFitnessPlanHistory = async (req, res) => {
     try {

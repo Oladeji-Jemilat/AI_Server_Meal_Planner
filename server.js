@@ -9,10 +9,9 @@ dotenv.config()
 const app = express()
 
 
-//routers
+//routes
 const authRoutes =require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoute")
-
 
 const PORT = process.env.PORT
 connectToDb()
@@ -22,7 +21,7 @@ console.log(`server is running on port ${PORT}`);
 
 app.post(
     "/api/subscription/webhook",
-    express.raw({ type: "*/*" }),   // keep body as buffer
+    express.raw({ type: "*/*" }),  
     activateSubscription
 );
 
@@ -35,7 +34,7 @@ app.use(morgan("dev"))
 app.use("/api/auth", authRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/fit-plan", require("./routes/fitPlanRoute"))
-app.use("/api/subcription", require("./routes/subscriptionRoute"))
+app.use("/api/subscription", require("./routes/subscriptionRoute"))
 
 
 

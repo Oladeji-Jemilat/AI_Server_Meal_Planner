@@ -4,8 +4,8 @@ const isLoggedIn = require('../middlewares/isLoggedIn');
 const isActiveSubscriber = require ("../middlewares/subscription")
 const fitPlanRoute = express.Router();
 
-fitPlanRoute.post('/create', isLoggedIn, isActiveSubscriber, createFitnessPlan)
-fitPlanRoute.get("/history", isLoggedIn, isActiveSubscriber, getFitnessPlanHistory);
-fitPlanRoute.get("/latest", isLoggedIn, isActiveSubscriber, getLatestFitnessPlan);
+fitPlanRoute.post('/create', isLoggedIn, createFitnessPlan)
+fitPlanRoute.get("/history", isLoggedIn, getFitnessPlanHistory);
+fitPlanRoute.get("/latest", isLoggedIn,  getLatestFitnessPlan);
 
 module.exports = fitPlanRoute;

@@ -37,6 +37,28 @@ const updateUser = async (req, res) => {
     }
 }
 
+const viewUserProfile = async (req, res) => {
+
+        const userId = req.user._id;
+    try {
+        const user = await userModel.findById(userId)
+        if(!user){
+            return res.status(404).json({
+                success:false,
+                message:"User not found"
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            message:"user info fetched successfully",
+            user
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports={
-    updateUser
+    updateUser,
+    viewUserProfile
 }
