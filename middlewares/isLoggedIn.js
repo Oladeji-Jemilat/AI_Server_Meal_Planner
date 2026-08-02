@@ -79,9 +79,9 @@ const isLoggedIn = async (req, res, next) => {
                 message: "Token is required"
             });
         }
-console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
+console.log("JWT_SECRET exists:", !!process.env.jwt_secret);
 console.log("Token exists:", !!token);
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.jwt_secret);
         const email = decoded.email;
 
         const isBlacklisted = await blacklistedToken.findOne({ token });
